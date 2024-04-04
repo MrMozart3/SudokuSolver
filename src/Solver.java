@@ -38,8 +38,14 @@ public class Solver{
                 else if(e.getActionCommand().equals("SOLVE")){
                     sudokuObject[] ans = new sudokuObject[maxAns];
                     int[] curAns = {0};
+                    if(currentX != -1 && currentY != -1) {
+                        changeColor(currentY, currentX, SudokuPanel.COLOR_DEFAULT);
+                        currentX = -1;
+                        currentY = -1;
+                    }
                     SolveSudoku(data, ans, curAns);
                     System.out.println("answers found: " + curAns[0]);
+
                     for(int y = 0; y < 9; y++) {
                         for(int x = 0; x < 9; x++) {
                             changeValue(y, x, String.valueOf(ans[0].get(y, x)));
