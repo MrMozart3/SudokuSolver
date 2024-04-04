@@ -31,13 +31,20 @@ public class Solver{
                 }
                 else if(e.getSource() instanceof keyObject key){
                     if(currentY != -1 && currentX != -1){
+                        data.set(currentY, currentX, Integer.parseInt(key.key));
                         changeValue(currentY, currentX, key.key);
                     }
                 }
                 else if(e.getActionCommand().equals("SOLVE")){
-                    sudokuObject  temp= new sudokuObject();
-                    temp.set(0, 0, 1);
-                    SolveSudoku(temp);
+                    sudokuObject[] ans = new sudokuObject[maxAns];
+                    int[] curAns = {0};
+                    SolveSudoku(data, ans, curAns);
+                    System.out.println("answers found: " + curAns[0]);
+                    for(int y = 0; y < 9; y++) {
+                        for(int x = 0; x < 9; x++) {
+                            changeValue(y, x, String.valueOf(ans[0].get(y, x)));
+                        }
+                    }
                 }
                 else if(e.getActionCommand().equals("CLEAR")){
                     System.out.println("CLEAR");
@@ -57,9 +64,7 @@ public class Solver{
     private void changeValue(int y, int x, String newValue){
         SudokuPanel.listener.actionPerformed(new ActionEvent(new buttonObject(y, x, Color.BLACK, false, newValue, true), ActionEvent.ACTION_PERFORMED, "change_button"));
     }
-    private void SolveSudoku(sudokuObject data){
-        sudokuObject[] ans = new sudokuObject[maxAns];
-        int[] curAns = {0};
+    private void SolveSudoku(sudokuObject data, sudokuObject[] ans, int[] curAns){
         SolveIteration(0, 0, data, ans, curAns);
         for(int x = 0; x < maxAns && x < curAns[0]; x++) {
             for (int i = 0; i < 9; i++) {
@@ -70,7 +75,6 @@ public class Solver{
             }
             System.out.println();
         }
-        System.out.println("answers found: " + curAns[0]);
     }
     private void SolveIteration(int curY, int curX, sudokuObject data, sudokuObject[] ans, int[] curAns){
         //upper limit of answers
