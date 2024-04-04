@@ -111,6 +111,8 @@ class SolvePanel extends JPanel{
                 button.setBackground(COLOR_DEFAULT);
             }
         });
+        button.addActionListener(Solver.listener);
+
 
         this.add(button, BorderLayout.CENTER);
 
