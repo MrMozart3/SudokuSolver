@@ -16,7 +16,6 @@ public class MainFrame extends JFrame{
 
         //TopPanel
         TopPanel topPanel = new TopPanel();
-        topPanel.setOpaque(true);
         this.add(topPanel, BorderLayout.CENTER);
         //SudokuPanel
         SudokuPanel sudokuPanel = new SudokuPanel(3);

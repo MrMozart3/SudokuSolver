@@ -5,9 +5,11 @@ public class Solver{
     public static ActionListener listener;
     private KeyListener keyListener;
     private int currentY, currentX;
+    private sudokuObject data;
     Solver() {
         currentX = -1;
         currentY = -1;
+        data = new sudokuObject();
         listener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -31,8 +33,15 @@ public class Solver{
                         changeValue(currentY, currentX, key.key);
                     }
                 }
-                else{
-                    System.out.println("Solver listener bad data ERROR");
+                else if(e.getActionCommand().equals("SOLVE")){
+                    SolveSudoku();
+
+                }
+                else if(e.getActionCommand().equals("CLEAR")){
+                    System.out.println("CLEAR");
+                }
+                else if(e.getActionCommand().equals("BACK")){
+                    System.out.println("BACK");
                 }
             }
         };
@@ -42,5 +51,11 @@ public class Solver{
     }
     private void changeValue(int y, int x, String newValue){
         SudokuPanel.listener.actionPerformed(new ActionEvent(new buttonObject(y, x, Color.BLACK, false, newValue, true), ActionEvent.ACTION_PERFORMED, "change_button"));
+    }
+    private void SolveSudoku(){
+
+    }
+    private void SolveIteration(){
+
     }
 }

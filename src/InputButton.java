@@ -6,13 +6,13 @@ import java.awt.event.*;
 public class InputButton extends JButton {
     public final int y, x;
 
-    InputButton(int y, int x) {
+    InputButton(int y, int x, String initialValue) {
         this.y = y;
         this.x = x;
         this.setFocusPainted(false);
         this.setOpaque(true);
         this.setBorder(BorderFactory.createEmptyBorder());
-        changeText("0");
+        changeText(initialValue);
         changeBackground(SudokuPanel.COLOR_DEFAULT);
         this.setHorizontalAlignment(JLabel.CENTER);
         this.setVerticalAlignment(JLabel.CENTER);

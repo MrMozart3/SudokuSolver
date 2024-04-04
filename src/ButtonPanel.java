@@ -7,7 +7,7 @@ public class ButtonPanel extends JPanel {
         this.setOpaque(false);
         this.setLayout(new GridLayout(1, 1));
         this.setBorder(BorderFactory.createEmptyBorder(top, left, bottom, right));
-        inputButton = new InputButton(y, x);
+        inputButton = new InputButton(y, x, "");
         this.add(inputButton);
     }
     public void changeText(String newText){
