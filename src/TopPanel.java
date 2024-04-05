@@ -1,12 +1,15 @@
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 class BackPanel extends JPanel{
     static Color COLOR_DEFAULT = new Color(201, 201, 201);
     static Color COLOR_HOVER = new Color(220, 220, 220);
+    JButton button;
 
     BackPanel(){
         //conf
@@ -14,7 +17,7 @@ class BackPanel extends JPanel{
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         //button
-        JButton button = new JButton();
+        button = new JButton();
         button.setText("BACK");
         button.setBackground(COLOR_DEFAULT);
         button.setFocusable(false);
@@ -37,9 +40,13 @@ class BackPanel extends JPanel{
                 button.setBackground(COLOR_DEFAULT);
             }
         });
+        button.addActionListener(Solver.listener);
 
         this.add(button, BorderLayout.CENTER);
 
+    }
+    public void setEnabledButton(boolean isEnabled){
+        button.setEnabled(isEnabled);
     }
 }
 class ClearPanel extends JPanel{
@@ -75,6 +82,7 @@ class ClearPanel extends JPanel{
                 button.setBackground(COLOR_DEFAULT);
             }
         });
+        button.addActionListener(Solver.listener);
 
         this.add(button, BorderLayout.CENTER);
 
@@ -121,6 +129,7 @@ class SolvePanel extends JPanel{
 
 
 public class TopPanel extends JPanel {
+    public static ActionListener listener;
     TopPanel(){
         //this.setBackground(Color.GRAY);
         this.setOpaque(false);
@@ -150,6 +159,7 @@ public class TopPanel extends JPanel {
         c.weightx = 0.5;
         c.weighty = 0.5;
         backPanel.setBackground(Color.RED);
+        backPanel.setEnabledButton(false); //////////////////////
         this.add(backPanel, c);
 
         JPanel resultsReturnPanel = new JPanel();
@@ -161,5 +171,19 @@ public class TopPanel extends JPanel {
         c.gridwidth = 3;
         resultsReturnPanel.setBackground(Color.CYAN);
         this.add(resultsReturnPanel, c);
+
+        listener = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                if(e.getActionCommand().equals("DISABLE_BACK")){
+                    backPanel.setEnabledButton(false);
+                }
+                else if(e.getActionCommand().equals("ENABLE_BACK")) {
+                    backPanel.setEnabledButton(true);
+                }
+            }
+        };
     }
+
+
 }

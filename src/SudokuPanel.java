@@ -49,7 +49,12 @@ public class SudokuPanel extends JPanel {
                         buttons[b.y][b.x].changeBackground(b.newColor);
                     }
                     if(b.changeValue){
-                        buttons[b.y][b.x].changeText(b.newValue);
+                        if(b.newValue == 0){
+                            buttons[b.y][b.x].changeText("");
+                        }
+                        else{
+                            buttons[b.y][b.x].changeText(String.valueOf(b.newValue));
+                        }
                     }
                 }
             }
@@ -62,7 +67,7 @@ public class SudokuPanel extends JPanel {
         this.getActionMap().put("1_PRESSED", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Solver.listener.actionPerformed(new ActionEvent(new keyObject("1"), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
+                Solver.listener.actionPerformed(new ActionEvent(new keyObject(1), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
             }
         });
         //2
@@ -70,7 +75,7 @@ public class SudokuPanel extends JPanel {
         this.getActionMap().put("2_PRESSED", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Solver.listener.actionPerformed(new ActionEvent(new keyObject("2"), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
+                Solver.listener.actionPerformed(new ActionEvent(new keyObject(2), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
             }
         });
         //3
@@ -78,7 +83,7 @@ public class SudokuPanel extends JPanel {
         this.getActionMap().put("3_PRESSED", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Solver.listener.actionPerformed(new ActionEvent(new keyObject("3"), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
+                Solver.listener.actionPerformed(new ActionEvent(new keyObject(3), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
             }
         });
         //4
@@ -86,7 +91,7 @@ public class SudokuPanel extends JPanel {
         this.getActionMap().put("4_PRESSED", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Solver.listener.actionPerformed(new ActionEvent(new keyObject("4"), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
+                Solver.listener.actionPerformed(new ActionEvent(new keyObject(4), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
             }
         });
         //5
@@ -94,7 +99,7 @@ public class SudokuPanel extends JPanel {
         this.getActionMap().put("5_PRESSED", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Solver.listener.actionPerformed(new ActionEvent(new keyObject("5"), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
+                Solver.listener.actionPerformed(new ActionEvent(new keyObject(5), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
             }
         });
         //6
@@ -102,7 +107,7 @@ public class SudokuPanel extends JPanel {
         this.getActionMap().put("6_PRESSED", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Solver.listener.actionPerformed(new ActionEvent(new keyObject("6"), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
+                Solver.listener.actionPerformed(new ActionEvent(new keyObject(6), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
             }
         });
         //7
@@ -110,7 +115,7 @@ public class SudokuPanel extends JPanel {
         this.getActionMap().put("7_PRESSED", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Solver.listener.actionPerformed(new ActionEvent(new keyObject("6"), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
+                Solver.listener.actionPerformed(new ActionEvent(new keyObject(7), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
             }
         });
         //8
@@ -118,7 +123,7 @@ public class SudokuPanel extends JPanel {
         this.getActionMap().put("8_PRESSED", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Solver.listener.actionPerformed(new ActionEvent(new keyObject("8"), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
+                Solver.listener.actionPerformed(new ActionEvent(new keyObject(8), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
             }
         });
         //9
@@ -126,7 +131,15 @@ public class SudokuPanel extends JPanel {
         this.getActionMap().put("9_PRESSED", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Solver.listener.actionPerformed(new ActionEvent(new keyObject("9"), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
+                Solver.listener.actionPerformed(new ActionEvent(new keyObject(9), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
+            }
+        });
+        //del
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "BACKSPACE_PRESSED");
+        this.getActionMap().put("BACKSPACE_PRESSED", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Solver.listener.actionPerformed(new ActionEvent(new keyObject(10), ActionEvent.ACTION_PERFORMED, "BUTTON PRESSED"));
             }
         });
     }

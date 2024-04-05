@@ -5,8 +5,8 @@ public class buttonObject {
     boolean changeColor;
     boolean changeValue;
     Color newColor;
-    String newValue;
-    buttonObject(int y, int x, Color newColor, boolean changeColor, String newValue, boolean changeValue){
+    int newValue;
+    buttonObject(int y, int x, Color newColor, boolean changeColor, int newValue, boolean changeValue){
         this.y = y;
         this.x = x;
         this.newColor = newColor;
