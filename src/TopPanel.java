@@ -162,15 +162,14 @@ public class TopPanel extends JPanel {
         backPanel.setEnabledButton(false); //////////////////////
         this.add(backPanel, c);
 
-        JPanel resultsReturnPanel = new JPanel();
-        resultsReturnPanel.setPreferredSize(new Dimension(500, 125));
+        ResultsPanel resultsPanel = new ResultsPanel();
+        resultsPanel.setPreferredSize(new Dimension(500, 125));
         c.gridx = 0;
         c.gridy = 1;
         c.weightx = 0;
         c.weighty = 0.5;
         c.gridwidth = 3;
-        resultsReturnPanel.setBackground(Color.CYAN);
-        this.add(resultsReturnPanel, c);
+        this.add(resultsPanel, c);
 
         listener = new ActionListener(){
             @Override
@@ -180,6 +179,12 @@ public class TopPanel extends JPanel {
                 }
                 else if(e.getActionCommand().equals("ENABLE_BACK")) {
                     backPanel.setEnabledButton(true);
+                }
+                else if("SET".equals(e.getActionCommand().substring(0, Math.min(e.getActionCommand().length(), 3)))){
+                    resultsPanel.EnableAnswers(Integer.parseInt(e.getActionCommand().substring(4)));
+                }
+                else if("DON".equals(e.getActionCommand().substring(0, Math.min(e.getActionCommand().length(), 3)))){
+                    resultsPanel.DisableAnswers();
                 }
             }
         };

@@ -38,6 +38,7 @@ public class Solver{
                 }
                 else if(e.getSource() instanceof keyObject key){
                     if(currentY != -1 && currentX != -1){
+                        TopPanel.listener.actionPerformed(new ActionEvent(new Object(), ActionEvent.ACTION_PERFORMED, "DON"));
                         if(key.key == 10){
                             data.set(currentY, currentX, 0);
                             changeValue(currentY, currentX, 0);
@@ -67,6 +68,7 @@ public class Solver{
                         currentY = -1;
                     }
                     SolveSudoku(data, ans, curAns);
+                    TopPanel.listener.actionPerformed(new ActionEvent(new Object(), ActionEvent.ACTION_PERFORMED, "SET_" + curAns[0]));
                     System.out.println("answers found: " + curAns[0]);
                     if(curAns[0] > 0){
                         AnswerMode(true, curAns[0]);
@@ -78,12 +80,14 @@ public class Solver{
                     }
                 }
                 else if(e.getActionCommand().equals("CLEAR")){
+                    TopPanel.listener.actionPerformed(new ActionEvent(new Object(), ActionEvent.ACTION_PERFORMED, "DON"));
                     sudokuObject empty = new sudokuObject();
                     ShowResult(data, empty);
                     SaveToHistory(data);
                 }
                 else if(e.getActionCommand().equals("BACK")){
                     if(currentlyInHistory >= 2){
+                        TopPanel.listener.actionPerformed(new ActionEvent(new Object(), ActionEvent.ACTION_PERFORMED, "DON"));
                         data.copy(GetFromHistory());
                         for(int y = 0; y < 9; y++){
                             for(int x = 0; x < 9; x++){
@@ -136,6 +140,10 @@ public class Solver{
         SudokuPanel.listener.actionPerformed(new ActionEvent(new buttonObject(y, x, Color.BLACK, false, newValue, true), ActionEvent.ACTION_PERFORMED, "change_button"));
     }
     private void SolveSudoku(sudokuObject data, sudokuObject[] ans, int[] curAns){
+        if(!data.isValid()){
+            curAns[0] = 0;
+            return;
+        }
         SolveIteration(0, 0, data, ans, curAns);
     }
     private void ShowResult(sudokuObject data, sudokuObject ans){
