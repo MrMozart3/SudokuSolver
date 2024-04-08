@@ -6,15 +6,28 @@ public class Solver{
     private KeyListener keyListener;
     private int currentY, currentX;
     private sudokuObject data;
+    //history
     private sudokuObject[] history;
     private final int historySize = 5;
     int currentlyInHistory;
-    private final int maxAns = 100;
-    boolean isAnswerMode;
+    //answers
+    private final int maxAns = 10;
+    private boolean isAnswerMode;
+    private int[] answers;
+    private sudokuObject[] answersBoards;
+    private int currentAnswerShowing;
     Solver() {
+        //history init
         history = new sudokuObject[10];
         for(int i = 0; i < historySize; i++) history[i] = new sudokuObject();
         currentlyInHistory = 1;
+        //answer init
+        answersBoards = new sudokuObject[maxAns];
+        isAnswerMode = false;
+        answers = new int[1];
+        currentAnswerShowing = -1;
+        //
+
         currentX = -1;
         currentY = -1;
         data = new sudokuObject();
@@ -46,6 +59,7 @@ public class Solver{
                             currentY = -1;
                             currentX = -1;
                             AnswerMode(false, -1);
+                            ReloadListAnswers();
                             SaveToHistory(data);
                         }
                         else {
@@ -55,25 +69,27 @@ public class Solver{
                             currentY = -1;
                             currentX = -1;
                             AnswerMode(false, -1);
+                            ReloadListAnswers();
                             SaveToHistory(data);
                         }
                     }
                 }
                 else if(e.getActionCommand().equals("SOLVE")){
-                    sudokuObject[] ans = new sudokuObject[maxAns];
-                    int[] curAns = {0};
+                    answers[0] = 0;
                     if(currentX != -1 && currentY != -1) {
                         changeColor(currentY, currentX, SudokuPanel.COLOR_DEFAULT);
                         currentX = -1;
                         currentY = -1;
                     }
-                    SolveSudoku(data, ans, curAns);
-                    TopPanel.listener.actionPerformed(new ActionEvent(new Object(), ActionEvent.ACTION_PERFORMED, "SET_" + curAns[0]));
-                    System.out.println("answers found: " + curAns[0]);
-                    if(curAns[0] > 0){
-                        AnswerMode(true, curAns[0]);
-                        ShowResult(data, ans[0]);
+                    SolveSudoku(data, answersBoards, answers);
+                    TopPanel.listener.actionPerformed(new ActionEvent(new Object(), ActionEvent.ACTION_PERFORMED, "SET_" + answers[0]));
+                    System.out.println("answers found: " + answers[0]);
+                    if(answers[0] > 0){
+                        AnswerMode(true, answers[0]);
+                        ShowResult(data, answersBoards[0]);
                         SaveToHistory(data);
+                        currentAnswerShowing = 0;
+                        ReloadListAnswers();
                     }
                     else{
                         System.out.println("NO RESULTS");
@@ -83,12 +99,16 @@ public class Solver{
                     TopPanel.listener.actionPerformed(new ActionEvent(new Object(), ActionEvent.ACTION_PERFORMED, "DON"));
                     sudokuObject empty = new sudokuObject();
                     ShowResult(data, empty);
+                    AnswerMode(false, 0);
+                    ReloadListAnswers();
                     SaveToHistory(data);
                 }
                 else if(e.getActionCommand().equals("BACK")){
                     if(currentlyInHistory >= 2){
                         TopPanel.listener.actionPerformed(new ActionEvent(new Object(), ActionEvent.ACTION_PERFORMED, "DON"));
                         data.copy(GetFromHistory());
+                        AnswerMode(false, 0);
+                        ReloadListAnswers();
                         for(int y = 0; y < 9; y++){
                             for(int x = 0; x < 9; x++){
                                 changeValue(y, x, data.get(y, x));
@@ -99,11 +119,52 @@ public class Solver{
                         }
                     }
                 }
+                else if(e.getActionCommand().equals("NEXT-ANS")){
+                    if(currentX != -1 && currentY != -1) {
+                        changeColor(currentY, currentX, SudokuPanel.COLOR_DEFAULT);
+                        currentX = -1;
+                        currentY = -1;
+
+                    }
+                    if(isAnswerMode && answers[0] > 0 && currentAnswerShowing < maxAns - 1){
+                        currentAnswerShowing++;
+                        ReloadListAnswers();
+
+                        ShowResult(data, answersBoards[currentAnswerShowing]);
+                        SaveToHistory(data);
+                    }
+                }
+                else if(e.getActionCommand().equals("PREV-ANS")){
+                    if(currentX != -1 && currentY != -1) {
+                        changeColor(currentY, currentX, SudokuPanel.COLOR_DEFAULT);
+                        currentX = -1;
+                        currentY = -1;
+                    }
+                    if(isAnswerMode && answers[0] > 0 && currentAnswerShowing > 0){
+                        currentAnswerShowing--;
+                        ReloadListAnswers();
+
+                        ShowResult(data, answersBoards[currentAnswerShowing]);
+                        SaveToHistory(data);
+                    }
+                }
                 else {
                     System.out.println(e.getSource());
                 }
             }
         };
+    }
+    private void ReloadListAnswers(){
+        String send = "LIST_";
+        if(isAnswerMode){
+            send+="EN_";
+        }
+        else{
+            send+="DIS_";
+        }
+        send+=String.valueOf(currentAnswerShowing) + "_" + String.valueOf(answers[0]);
+        System.out.println(send);
+        TopPanel.listener.actionPerformed(new ActionEvent(new Object(), ActionEvent.ACTION_PERFORMED, send));
     }
     private void SaveToHistory(sudokuObject s){
         for(int i = historySize - 1; i > 0; i--){
@@ -131,7 +192,9 @@ public class Solver{
         return temp;
     }
     private void AnswerMode(boolean enabled, int answers){
-        System.out.println("ANSWER MODE" + enabled);
+        isAnswerMode = enabled;
+        this.answers[0] = answers;
+        System.out.println("ANSWER MODE" + enabled + "   answers:" + answers);
     }
     private void changeColor(int y, int x, Color color){
         SudokuPanel.listener.actionPerformed(new ActionEvent(new buttonObject(y, x, color, true, 0, false), ActionEvent.ACTION_PERFORMED, "change_button"));

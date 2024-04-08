@@ -186,6 +186,12 @@ public class TopPanel extends JPanel {
                 else if("DON".equals(e.getActionCommand().substring(0, Math.min(e.getActionCommand().length(), 3)))){
                     resultsPanel.DisableAnswers();
                 }
+                else if("LIST_EN".equals(e.getActionCommand().substring(0, Math.min(e.getActionCommand().length(), 7)))){
+                    resultsPanel.changeShowingNumber(true, e.getActionCommand().substring(8));
+                }
+                else if("LIST_DIS".equals(e.getActionCommand().substring(0, Math.min(e.getActionCommand().length(), 8)))){
+                    resultsPanel.changeShowingNumber(false, e.getActionCommand().substring(9));
+                }
             }
         };
     }

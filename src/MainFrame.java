@@ -10,6 +10,11 @@ public class MainFrame extends JFrame{
         this.getContentPane().setBackground(new Color(0x323233));
         this.setLocationRelativeTo(null);
 
+        ImageIcon icon = new ImageIcon("assets/icon.png");
+        this.setIconImage(icon.getImage());
+
+        this.setTitle("Sudoku Solver");
+
 
 
         //TopPanel
