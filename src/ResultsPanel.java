@@ -122,7 +122,7 @@ public class ResultsPanel extends JPanel {
         if(show){
             int current = Integer.parseInt(compressedValue.substring(0, compressedValue.indexOf('_')));
             int max = Integer.parseInt(compressedValue.substring(compressedValue.indexOf('_') + 1));
-            System.out.println(show + " " + current + " " + max);
+            if(Solver.DEBUG_MODE) System.out.println(show + " " + current + " " + max);
             botText.setText(String.valueOf(current + 1));
 
             botText.setVisible(false);
