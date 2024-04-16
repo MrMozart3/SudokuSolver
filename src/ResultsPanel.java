@@ -107,7 +107,7 @@ public class ResultsPanel extends JPanel {
     public void EnableAnswers(int answersCount){
         if(answersCount > 0) {
             topText.setText("Found " + answersCount + " Answers");
-            topText.setForeground(Color.BLUE);
+            topText.setForeground(Color.WHITE);
         }
         else{
             topText.setText("No Answers Found");
