@@ -22,3 +22,4 @@ If you want to clear the board, there's no need to remove numbers individually. 
 > Clearing board doesnt clear history, you can still go back to the state before clearing
 
 # Images
+![image_1](assets/sudoku_solver_1.png?raw=true)
